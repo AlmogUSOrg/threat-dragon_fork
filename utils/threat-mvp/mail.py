@@ -41,12 +41,13 @@ def sendEmail(subject, body, receiver):
             message = f"""\
             Subject: {subject}
             To: {receiver}
-            From: {sender}
+From: {sender}
             {body}"""
 
             # Send the email using the credentials
             try:
                 with smtplib.SMTP(smtp_server, port) as server:
+                    server.starttls()
                     server.sendmail(sender, receiver, message)
             except (gaierror, ConnectionRefusedError):
                 log.logger.error("Failed to connect to the server. Bad connection settings")
